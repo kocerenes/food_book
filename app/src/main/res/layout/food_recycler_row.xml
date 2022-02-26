@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_margin="3dp">
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/foodNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Besin simini göstereceğiz"
+                android:layout_margin="5dp"
+                android:textSize="20sp"
+                android:textStyle="bold">
+            </TextView>
+
+            <TextView
+                android:id="@+id/foodCaloriTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Besin kalorisini göstereceğiz"
+                android:textSize="18sp"
+                android:layout_margin="5dp">
+            </TextView>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+</layout>
