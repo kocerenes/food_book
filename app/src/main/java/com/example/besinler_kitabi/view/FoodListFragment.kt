@@ -1,4 +1,4 @@
-package com.example.besinler_kitabi
+package com.example.besinler_kitabi.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -30,10 +30,6 @@ class FoodListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.goFoodDetailButton.setOnClickListener{
-            val action = FoodListFragmentDirections.actionFoodListFragmentToFoodDetailFragment(3)
-            Navigation.findNavController(it).navigate(action)
-        }
     }
 
 
