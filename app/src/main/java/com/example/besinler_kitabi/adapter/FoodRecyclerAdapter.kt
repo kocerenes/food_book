@@ -3,12 +3,14 @@ package com.example.besinler_kitabi.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.besinler_kitabi.R
 import com.example.besinler_kitabi.databinding.FoodRecyclerRowBinding
 import com.example.besinler_kitabi.databinding.FragmentFoodDetailBinding
 import com.example.besinler_kitabi.databinding.FragmentFoodListBinding
 import com.example.besinler_kitabi.model.Food
+import com.example.besinler_kitabi.view.FoodListFragmentDirections
 
 class FoodRecyclerAdapter(val foodList : ArrayList<Food>) : RecyclerView.Adapter<FoodRecyclerAdapter.FoodViewHolder>() {
 
@@ -27,6 +29,12 @@ class FoodRecyclerAdapter(val foodList : ArrayList<Food>) : RecyclerView.Adapter
         holder.binding.foodNameTextView.text = foodList.get(position).name
         holder.binding.foodCaloriTextView.text = foodList.get(position).calori
         //image eklenecek
+
+        holder.itemView.setOnClickListener{
+            val action = FoodListFragmentDirections.actionFoodListFragmentToFoodDetailFragment(0)
+            Navigation.findNavController(it).navigate(action)
+        }
+
     }
 
     override fun getItemCount(): Int {
