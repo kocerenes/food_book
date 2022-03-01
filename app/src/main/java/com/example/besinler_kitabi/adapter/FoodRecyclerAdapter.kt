@@ -10,6 +10,8 @@ import com.example.besinler_kitabi.databinding.FoodRecyclerRowBinding
 import com.example.besinler_kitabi.databinding.FragmentFoodDetailBinding
 import com.example.besinler_kitabi.databinding.FragmentFoodListBinding
 import com.example.besinler_kitabi.model.Food
+import com.example.besinler_kitabi.util.downloadImage
+import com.example.besinler_kitabi.util.makePlaceholder
 import com.example.besinler_kitabi.view.FoodListFragmentDirections
 
 class FoodRecyclerAdapter(val foodList : ArrayList<Food>) : RecyclerView.Adapter<FoodRecyclerAdapter.FoodViewHolder>() {
@@ -29,6 +31,7 @@ class FoodRecyclerAdapter(val foodList : ArrayList<Food>) : RecyclerView.Adapter
         holder.binding.foodNameTextView.text = foodList.get(position).name
         holder.binding.foodCaloriTextView.text = foodList.get(position).calori
         //image eklenecek
+        holder.binding.imageView.downloadImage(foodList.get(position).image, makePlaceholder(holder.itemView.context))
 
         holder.itemView.setOnClickListener{
             val action = FoodListFragmentDirections.actionFoodListFragmentToFoodDetailFragment(0)
