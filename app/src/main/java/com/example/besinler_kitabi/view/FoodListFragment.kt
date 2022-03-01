@@ -1,5 +1,6 @@
 package com.example.besinler_kitabi.view
 
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -45,6 +46,14 @@ class FoodListFragment : Fragment() {
 
         binding.foodListRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.foodListRecyclerView.adapter = recyclerFoodAdapter
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            binding.loadProgressBar.visibility = View.VISIBLE
+            binding.errorTextView.visibility = View.GONE
+            binding.foodListRecyclerView.visibility = View.GONE
+            viewModel.refreshData()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
 
         observeLiveData()
 
