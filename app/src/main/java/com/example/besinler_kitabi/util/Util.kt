@@ -2,6 +2,7 @@ package com.example.besinler_kitabi.util
 
 import android.content.Context
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -19,4 +20,10 @@ fun makePlaceholder(context : Context) : CircularProgressDrawable{
         centerRadius = 40f
         start()
     }
+}
+
+//recycler_row içinden ulaşılacak
+@BindingAdapter("android:downloadImage")
+fun downloadImageWithXML(view : ImageView, url: String?){
+    view.downloadImage(url, makePlaceholder(view.context))
 }
