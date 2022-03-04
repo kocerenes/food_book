@@ -28,7 +28,6 @@ abstract class FoodDatabase : RoomDatabase() {
             context.applicationContext,
             FoodDatabase::class.java,
             "fooddatabase").build()
-
     }
 
 }

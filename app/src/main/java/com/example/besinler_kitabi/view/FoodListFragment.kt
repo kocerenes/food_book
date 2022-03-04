@@ -51,7 +51,7 @@ class FoodListFragment : Fragment() {
             binding.loadProgressBar.visibility = View.VISIBLE
             binding.errorTextView.visibility = View.GONE
             binding.foodListRecyclerView.visibility = View.GONE
-            viewModel.refreshData()
+            viewModel.refreshFromInternet()
             binding.swipeRefreshLayout.isRefreshing = false
         }
 

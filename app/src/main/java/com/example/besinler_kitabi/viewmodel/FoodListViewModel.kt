@@ -1,13 +1,13 @@
 package com.example.besinler_kitabi.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.besinler_kitabi.model.Food
 import com.example.besinler_kitabi.service.FoodDatabase
 import com.example.besinler_kitabi.service.FoodService
+import com.example.besinler_kitabi.util.PrivateSharedPreferences
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.android.schedulers.AndroidSchedulers.mainThread
 
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -18,25 +18,38 @@ class FoodListViewModel(application: Application) : BaseViewModel(application) {
     val foods  = MutableLiveData<List<Food>>()
     val errorMessage = MutableLiveData<Boolean>()
     val isFoodLoading = MutableLiveData<Boolean>()
+    private var updateTime = 10*60*1000*1000*1000L
 
     private val foodService = FoodService()
     private val disposable = CompositeDisposable()
 
+    private val privateSharedPreferences = PrivateSharedPreferences(getApplication())
+
+
     fun refreshData(){
+        val savedTime = privateSharedPreferences.getTime()
 
-        /*val muz = Food("Muz","100","10","5","1","www.test.com")
-        val cilek = Food("çilek","200","10","5","1","www.test.com")
-        val elma = Food("elma","300","20","5","1","www.test.com")
+        if (savedTime != null && savedTime != 0L && System.nanoTime()-savedTime < updateTime){
+            getDataFromSQLite()
+        }else{
+            getDataFromInternet()
+        }
+    }
 
-        val foodList = arrayListOf<Food>(muz,cilek,elma)
-
-        foods.value = foodList
-        errorMessage.value = false
-        isFoodLoading.value = false*/
+    fun refreshFromInternet(){
         getDataFromInternet()
     }
 
-    fun getDataFromInternet(){
+    private fun getDataFromSQLite(){
+        isFoodLoading.value = true
+        launch {
+            val foodsList = FoodDatabase(getApplication()).foodDao().getAllFood()
+            showFoods(foodsList)
+            Toast.makeText(getApplication(),"Besinleri Room'dan aldık",Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun getDataFromInternet(){
 
         isFoodLoading.value = true
 
@@ -48,6 +61,7 @@ class FoodListViewModel(application: Application) : BaseViewModel(application) {
                     override fun onSuccess(t: List<Food>) {
                         //başarılı
                         keepSqlite(t)
+                        Toast.makeText(getApplication(),"Besinleri internetten aldık",Toast.LENGTH_LONG).show()
                     }
 
                     override fun onError(e: Throwable) {
@@ -79,6 +93,7 @@ class FoodListViewModel(application: Application) : BaseViewModel(application) {
             }
             showFoods(foodsList)
         }
+        privateSharedPreferences.saveTime(System.nanoTime())
     }
 
 }
